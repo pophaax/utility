@@ -15,11 +15,18 @@ SOURCES = Utility.cpp
 HEADERS = Utility.h
 FILE = Utility.o
 
+SOURCES_TIMER = Timer.cpp
+FILE_TIMER = Timer.o
 
-all: $(FILE)
+OBJ = $(FILE) $(FILE_TIMER)
+
+all: $(OBJ)
 
 $(FILE): $(SOURCES) $(HEADERS)
 	$(CC) $(SOURCES) $(FLAGS) $(LIBS) -c -o $(FILE)
 
+$(FILE_TIMER): $(SOURCES_TIMER) Timer.h
+	$(CC) $(SOURCES_TIMER) $(FLAGS) $(LIBS) -c -o $(FILE_TIMER)
+
 clean:
-	rm -f $(FILE)
+	rm -f $(OBJ)
