@@ -114,3 +114,53 @@ void Utility::polarToCartesian(float degrees, float& x, float& y)
 	x = cos(degrees * M_PI/180);
 	y = sin(degrees * M_PI/180);
 }
+
+bool Utility::isAngleInSector(double angle, double sectorAngle1, double sectorAngle2)
+{
+	double diff1 = angleDifference(angle, sectorAngle1);
+	double diff2 = angleDifference(angle, sectorAngle2);
+	double sectorDiff = angleDifference(sectorAngle1, sectorAngle2);
+
+	if (diff1 < sectorDiff && diff2 < sectorDiff)
+		return true;
+	else
+		return false;
+}
+
+
+double Utility::angleDifference(double angle1, double angle2)
+{
+	const double fullRevolution = 360;
+	
+	double diff = std::abs(limitAngleRange(angle1) - limitAngleRange(angle2));
+	if (diff > fullRevolution/2) diff = fullRevolution - diff;
+
+	return diff;
+}
+
+
+double Utility::limitAngleRange(double angle)
+{
+	const double fullRevolution = 360;
+	const double minAngle = 0;
+
+	while (angle < minAngle)
+		angle += fullRevolution;
+
+	while (angle >= minAngle + fullRevolution)
+		angle -= fullRevolution;
+
+	return angle;
+}
+
+
+double Utility::degreeToRadian(double degrees)
+{
+	return degrees * M_PI / 180;
+}
+
+
+double Utility::radianToDegree(double radians)
+{
+	return radians / M_PI * 180;
+}

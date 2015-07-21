@@ -21,6 +21,13 @@ public:
 	 * unit circle
 	 */
 	static void polarToCartesian(float degrees, float& x, float& y);
+
+	static bool isAngleInSector(double angle, double sectorAngle1, double sectorAngle2);
+	static double angleDifference(double angle1, double angle2);
+	static double limitAngleRange(double angle);
+	static double degreeToRadian(double degrees);
+	static double radianToDegree(double radians);
+
 };
 
 #endif
