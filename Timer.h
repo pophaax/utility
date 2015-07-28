@@ -10,9 +10,21 @@ public:
 	~Timer() {};
 
 	/*
-	 * sets timer start time to current time
+	 * activates timer & sets start time to current time
+	 * unless it's already running
 	 */
 	void start();
+
+	/*
+	 * activates timer & sets start time to current time
+	 */
+	void reset();
+
+	/*
+	 * deactivates timer
+	 */
+	void stop();
+
 	/*
 	 * returns seconds passed since timer started
 	 */
@@ -26,9 +38,15 @@ public:
 	 * sleeps until timer reaches provided time 
 	 */
 	void sleepUntil(double seconds);
-	
+
+	/*
+	 * checks if timer is running & if it reached the time in arg
+	 */
+	bool timeReached(double seconds);
+
 private:
 	std::chrono::steady_clock::time_point m_start;
+	bool m_running;
 };
 
 #endif

@@ -6,12 +6,28 @@
 #define DURATION std::chrono::duration
 
 Timer::Timer() :
-	m_start(STEADY_CLOCK::now())
+	m_start(STEADY_CLOCK::now()),
+	m_running(false)
 {}
 
 void Timer::start()
 {
-	m_start = STEADY_CLOCK::now();
+	if (!m_running)
+	{
+		m_start = STEADY_CLOCK::now();
+		m_running = true;
+	}
+}
+
+void Timer::reset()
+{
+	m_start = STEADY_CLOCK::now();	
+	m_running = true;
+}
+
+void Timer::stop()
+{
+	m_running = false;
 }
 
 double Timer::timePassed()
@@ -37,4 +53,13 @@ void Timer::sleepUntil(double seconds)
 
 	microseconds = timeUntil(seconds) * toMicro;
 	std::this_thread::sleep_for(std::chrono::microseconds(microseconds));
+}
+
+bool Timer::timeReached(double seconds)
+{
+	if (m_running && timePassed() > seconds)
+	{
+		return true;
+	}
+	return false;
 }
