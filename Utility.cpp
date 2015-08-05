@@ -117,14 +117,15 @@ void Utility::polarToCartesian(float degrees, float& x, float& y)
 
 bool Utility::isAngleInSector(double angle, double sectorAngle1, double sectorAngle2)
 {
-	double diff1 = angleDifference(angle, sectorAngle1);
-	double diff2 = angleDifference(angle, sectorAngle2);
-	double sectorDiff = angleDifference(sectorAngle1, sectorAngle2);
+	double start = 0;
+	double end = limitAngleRange(sectorAngle2 - sectorAngle1);
+	double toCheck = limitAngleRange(angle - sectorAngle1);
 
-	if (diff1 < sectorDiff && diff2 < sectorDiff)
-		return true;
-	else
-		return false;
+	bool angleIsInSector = false;
+	if (toCheck >= start && toCheck <= end)
+		angleIsInSector = true;
+
+	return angleIsInSector;
 }
 
 

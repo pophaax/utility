@@ -22,6 +22,9 @@ public:
 	 */
 	static void polarToCartesian(float degrees, float& x, float& y);
 
+	/*
+	 * Check if angle is between sectorAngle1 and sectorAngle2, going from 1 to 2 clockwise
+	 */
 	static bool isAngleInSector(double angle, double sectorAngle1, double sectorAngle2);
 	static double angleDifference(double angle1, double angle2);
 	static double limitAngleRange(double angle);
