@@ -31,6 +31,8 @@ public:
 	static double degreeToRadian(double degrees);
 	static double radianToDegree(double radians);
 
+	static int addDeclinationToHeading(int heading, int declination);
+
 };
 
 #endif

@@ -165,3 +165,7 @@ double Utility::radianToDegree(double radians)
 {
 	return radians / M_PI * 180;
 }
+
+int Utility::addDeclinationToHeading(int heading, int declination) {
+	return static_cast<int> (Utility::limitAngleRange(heading + declination) + 0.5);
+}
