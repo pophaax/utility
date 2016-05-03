@@ -33,6 +33,8 @@ public:
 
 	static int addDeclinationToHeading(int heading, int declination);
 
+	static double directionAdjustedSpeed(double gpsHeading,double compassHeading,double gpsSpeed);
+	
 };
 
 #endif

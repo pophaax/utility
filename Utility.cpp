@@ -169,3 +169,14 @@ double Utility::radianToDegree(double radians)
 int Utility::addDeclinationToHeading(int heading, int declination) {
 	return static_cast<int> (Utility::limitAngleRange(heading + declination) + 0.5);
 }
+
+double Utility::directionAdjustedSpeed(double gpsHeading,double compassHeading,double gpsSpeed) {
+	double speed = 0;
+	
+		if (Utility::angleDifference(gpsHeading,compassHeading) < 90)
+		{
+			speed = gpsSpeed;
+		}
+
+		return speed;
+}
