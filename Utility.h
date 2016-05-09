@@ -3,6 +3,7 @@
 
 #include <stdint.h> // uint8_t
 #include <vector>
+#include "models/SystemStateModel.h"
 
 
 class Utility {
@@ -34,6 +35,8 @@ public:
 	static int addDeclinationToHeading(int heading, int declination);
 
 	static double directionAdjustedSpeed(double gpsHeading,double compassHeading,double gpsSpeed);
+
+	static double calculateTrueWindDirection(const SystemStateModel& systemStateModel , double heading);
 	
 };
 

@@ -180,3 +180,42 @@ double Utility::directionAdjustedSpeed(double gpsHeading,double compassHeading,d
 
 		return speed;
 }
+
+double Utility::calculateTrueWindDirection(const SystemStateModel& systemStateModel , double heading){
+
+	double knots = 1.94384;
+	double apparentWindSpeed = systemStateModel.windsensorModel.speed * knots; // Converting m/s to knots
+	double apparentWindAngle = systemStateModel.windsensorModel.direction;
+	double boatSpeed = systemStateModel.gpsModel.speed; 
+
+	if (apparentWindAngle < 0.001 ){
+		apparentWindAngle = 0.001;
+	} else if ( apparentWindAngle > 359.999 ){
+		apparentWindAngle = 359.999 ;
+	}
+
+	if(apparentWindSpeed < 0.001){
+		apparentWindSpeed = 0.001;
+	}
+
+	double trueWindSpeed = sqrt((apparentWindSpeed * apparentWindSpeed) + (boatSpeed * boatSpeed) 
+						 - (2 * boatSpeed * apparentWindSpeed * cos(apparentWindAngle/180*M_PI)));
+
+	double alpha = acos((apparentWindSpeed * cos(apparentWindAngle/180*M_PI) - boatSpeed)
+					/ trueWindSpeed)* 180/M_PI;
+
+	double twd = 0;
+	if (apparentWindAngle > 180){
+		twd = heading - alpha;
+		if (twd < 0){
+			twd = twd + 360;
+		}
+	} else {
+		twd = heading + alpha; 
+		if (twd > 360){
+			twd = twd - 360;
+		}
+	}
+
+	return twd;
+}
