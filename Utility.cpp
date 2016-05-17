@@ -87,7 +87,7 @@ float Utility::mean(std::vector<float> values)
 float Utility::meanOfAngles(std::vector<float> anglesInDegrees)
 {
 	if (anglesInDegrees.size() < 1) return 0;
-	 
+
 	std::vector<float> xx, yy;
 	float x, y;
 
@@ -105,7 +105,7 @@ float Utility::meanOfAngles(std::vector<float> anglesInDegrees)
 	// atan2 produces results in the range (−π, π],
 	// which can be mapped to [0, 2π) by adding 2π to negative results
 	if (meanAngleRadians < 0) meanAngleRadians += 2*M_PI;
-	
+
 	return meanAngleRadians * 180/M_PI;
 }
 
@@ -132,7 +132,7 @@ bool Utility::isAngleInSector(double angle, double sectorAngle1, double sectorAn
 double Utility::angleDifference(double angle1, double angle2)
 {
 	const double fullRevolution = 360;
-	
+
 	double diff = std::abs(limitAngleRange(angle1) - limitAngleRange(angle2));
 	if (diff > fullRevolution/2) diff = fullRevolution - diff;
 
@@ -172,7 +172,7 @@ int Utility::addDeclinationToHeading(int heading, int declination) {
 
 double Utility::directionAdjustedSpeed(double gpsHeading,double compassHeading,double gpsSpeed) {
 	double speed = 0;
-	
+
 		if (Utility::angleDifference(gpsHeading,compassHeading) < 90)
 		{
 			speed = gpsSpeed;
@@ -186,7 +186,7 @@ double Utility::calculateTrueWindDirection(const SystemStateModel& systemStateMo
 	double knots = 1.94384;
 	double apparentWindSpeed = systemStateModel.windsensorModel.speed * knots; // Converting m/s to knots
 	double apparentWindAngle = systemStateModel.windsensorModel.direction;
-	double boatSpeed = systemStateModel.gpsModel.speed; 
+	double boatSpeed = systemStateModel.gpsModel.speed;
 
 	if (apparentWindAngle < 0.001 ){
 		apparentWindAngle = 0.001;
@@ -195,10 +195,10 @@ double Utility::calculateTrueWindDirection(const SystemStateModel& systemStateMo
 	}
 
 	if(apparentWindSpeed < 0.001){
-		apparentWindSpeed = 0.001;
+		return heading;
 	}
 
-	double trueWindSpeed = sqrt((apparentWindSpeed * apparentWindSpeed) + (boatSpeed * boatSpeed) 
+	double trueWindSpeed = sqrt((apparentWindSpeed * apparentWindSpeed) + (boatSpeed * boatSpeed)
 						 - (2 * boatSpeed * apparentWindSpeed * cos(apparentWindAngle/180*M_PI)));
 
 	double alpha = acos((apparentWindSpeed * cos(apparentWindAngle/180*M_PI) - boatSpeed)
@@ -206,15 +206,9 @@ double Utility::calculateTrueWindDirection(const SystemStateModel& systemStateMo
 
 	double twd = 0;
 	if (apparentWindAngle > 180){
-		twd = heading - alpha;
-		if (twd < 0){
-			twd = twd + 360;
-		}
+		twd = Utility::limitAngleRange(heading - alpha);
 	} else {
-		twd = heading + alpha; 
-		if (twd > 360){
-			twd = twd - 360;
-		}
+		twd = Utility::limitAngleRange(heading + alpha);
 	}
 
 	return twd;
