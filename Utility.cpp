@@ -180,7 +180,10 @@ double Utility::directionAdjustedSpeed(double gpsHeading,double compassHeading,d
 
 		return speed;
 }
-
+/*
+ * uses formula for calculating true Wind Direction
+ * https://en.wikipedia.org/wiki/Apparent_wind
+ */
 double Utility::calculateTrueWindDirection(const SystemStateModel& systemStateModel , double heading){
 
 	double knots = 1.94384;
