@@ -1,5 +1,6 @@
 #include "Utility.h"
 #include <algorithm>
+#include <cmath>
 
 
 int Utility::combineBytes(uint8_t MSB, uint8_t LSB)
