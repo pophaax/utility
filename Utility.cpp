@@ -196,8 +196,8 @@ double Utility::directionAdjustedSpeed(double gpsHeading,double compassHeading,d
  */
 double Utility::calculateTrueWindDirection(const SystemStateModel& systemStateModel , double heading){
 
-	double knots = 1.94384;
-	double apparentWindSpeed = systemStateModel.windsensorModel.speed * knots; // Converting m/s to knots
+	//double knots = 1.94384;
+	double apparentWindSpeed = systemStateModel.windsensorModel.speed; //* knots; // Converting m/s to knots
 	double apparentWindAngle = systemStateModel.windsensorModel.direction;
 	double boatSpeed = systemStateModel.gpsModel.speed;
 
